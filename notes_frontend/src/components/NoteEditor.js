@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { FiTrash2, FiEdit2 } from "react-icons/fi";
 
 /**
  * PUBLIC_INTERFACE
@@ -79,23 +80,38 @@ function NoteEditor({ note, onUpdate, onDelete }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, height: "100%" }}>
-      <input
-        aria-label="Note title"
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-        style={{
-          fontSize: 18,
-          fontWeight: 700,
-          padding: "10px 12px",
-          borderRadius: 8,
-          border: "1px solid var(--border-color)",
-          background: "var(--bg-secondary)",
-          color: "var(--text-primary)",
-          outlineColor: "var(--text-secondary)",
-        }}
-      />
+      <div style={{ position: "relative" }}>
+        <input
+          aria-label="Note title"
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          style={{
+            width: "100%",
+            fontSize: 18,
+            fontWeight: 700,
+            padding: "10px 36px 10px 12px",
+            borderRadius: 8,
+            border: "1px solid var(--border-color)",
+            background: "var(--bg-secondary)",
+            color: "var(--text-primary)",
+            outlineColor: "var(--text-secondary)",
+          }}
+        />
+        <FiEdit2
+          aria-hidden="true"
+          size={16}
+          style={{
+            position: "absolute",
+            right: 10,
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "var(--color-primary)"
+          }}
+          title="Editing title"
+        />
+      </div>
       <textarea
         aria-label="Note content"
         value={content}
@@ -121,9 +137,10 @@ function NoteEditor({ note, onUpdate, onDelete }) {
           className="btn"
           onClick={handleDelete}
           aria-label="Delete note"
-          style={{ padding: "8px 12px" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 12px", backgroundColor: "var(--color-error)", borderColor: "var(--color-error)" }}
         >
-          🗑 Delete
+          <FiTrash2 aria-hidden="true" size={18} color="#ffffff" />
+          <span>Delete</span>
         </button>
       </div>
     </div>
