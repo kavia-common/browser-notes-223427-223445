@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { useNotes } from './hooks/useNotes';
 import { loadTheme, saveTheme } from './storage/notesStorage';
+import Sidebar from './components/Sidebar';
 
 // PUBLIC_INTERFACE
 function App() {
-  /** Root App component setting theme and rendering a basic two-panel shell wired to useNotes hook. */
+  /** Root App component setting theme and rendering a two-panel layout (Sidebar + Editor) wired to useNotes hook. */
   const {
     notes,
     filteredNotes,
@@ -64,75 +65,15 @@ function App() {
           minHeight: 'calc(100vh - 120px)',
         }}
       >
-        {/* Sidebar Placeholder */}
-        <section
-          aria-label="Notes list sidebar"
-          style={{
-            background: 'var(--bg-secondary)',
-            color: 'var(--text-primary)',
-            padding: 12,
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: 0,
-          }}
-        >
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
-            <button className="btn" onClick={addNote} aria-label="Add note" style={{ padding: '8px 12px' }}>
-              + New
-            </button>
-            <input
-              aria-label="Search notes"
-              type="search"
-              placeholder="Search..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              style={{
-                flex: 1,
-                padding: '8px 10px',
-                borderRadius: 6,
-                border: '1px solid var(--border-color)',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-primary)',
-              }}
-            />
-          </div>
-          <div role="list" aria-label="Notes list" style={{ overflowY: 'auto', minHeight: 0 }}>
-            {/* Placeholder items rendering to show wiring; replace with Sidebar component later */}
-            {filteredNotes.length === 0 ? (
-              <div style={{ padding: 12, opacity: 0.7 }}>No notes yet. Click “New”.</div>
-            ) : (
-              filteredNotes.map((n) => (
-                <button
-                  key={n.id}
-                  role="listitem"
-                  onClick={() => selectNote(n.id)}
-                  aria-current={selectedNoteId === n.id ? 'true' : 'false'}
-                  style={{
-                    display: 'block',
-                    width: '100%',
-                    textAlign: 'left',
-                    padding: '10px 12px',
-                    marginBottom: 6,
-                    borderRadius: 8,
-                    border: '1px solid var(--border-color)',
-                    background:
-                      selectedNoteId === n.id ? 'rgba(97,218,251,0.12)' : 'var(--bg-primary)',
-                    color: 'var(--text-primary)',
-                    cursor: 'pointer',
-                  }}
-                  title={n.title || 'Untitled'}
-                >
-                  <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
-                    {n.title || 'Untitled'}
-                  </div>
-                  <div style={{ fontSize: 12, opacity: 0.7, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {n.content}
-                  </div>
-                </button>
-              ))
-            )}
-          </div>
-        </section>
+        {/* Sidebar */}
+        <Sidebar
+          notes={filteredNotes}
+          selectedId={selectedNoteId}
+          onSelect={selectNote}
+          onNew={addNote}
+          query={query}
+          onQueryChange={setQuery}
+        />
 
         {/* Editor Placeholder */}
         <section
