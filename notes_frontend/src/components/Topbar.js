@@ -1,5 +1,6 @@
 import React from "react";
 import { loadTheme, saveTheme } from "../storage/notesStorage";
+import { FiPlus, FiSearch } from "react-icons/fi";
 
 /**
  * PUBLIC_INTERFACE
@@ -51,27 +52,41 @@ function Topbar({ theme, onToggleTheme, onNew, query, onQueryChange, counts }) {
           className="btn"
           onClick={onNew}
           aria-label="Create new note"
-          style={{ padding: "8px 12px" }}
+          style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 12px" }}
         >
-          + New
+          <FiPlus aria-hidden="true" size={18} color="#ffffff" />
+          <span>New</span>
         </button>
-        <input
-          aria-label="Search notes"
-          type="search"
-          placeholder="Search..."
-          value={query}
-          onChange={(e) => onQueryChange && onQueryChange(e.target.value)}
-          style={{
-            flex: 1,
-            padding: "8px 10px",
-            borderRadius: 6,
-            border: "1px solid var(--border-color)",
-            background: "var(--bg-primary)",
-            color: "var(--text-primary)",
-            outlineColor: "var(--text-secondary)",
-            minWidth: 120,
-          }}
-        />
+        <div style={{ position: "relative", flex: 1, minWidth: 120 }}>
+          <FiSearch
+            aria-hidden="true"
+            size={16}
+            style={{
+              position: "absolute",
+              left: 10,
+              top: "50%",
+              transform: "translateY(-50%)",
+              color: "var(--color-secondary)",
+              opacity: 0.9
+            }}
+          />
+          <input
+            aria-label="Search notes"
+            type="search"
+            placeholder="Search..."
+            value={query}
+            onChange={(e) => onQueryChange && onQueryChange(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "8px 10px 8px 34px",
+              borderRadius: 6,
+              border: "1px solid var(--border-color)",
+              background: "var(--bg-primary)",
+              color: "var(--text-primary)",
+              outlineColor: "var(--text-secondary)"
+            }}
+          />
+        </div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
