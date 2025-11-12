@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { FiPlus, FiSearch, FiFileText } from "react-icons/fi";
 
 /**
  * PUBLIC_INTERFACE
@@ -116,43 +115,28 @@ function Sidebar({
           className="btn"
           onClick={onNew}
           aria-label="Add note"
-          style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 12px" }}
+          style={{ padding: "8px 12px" }}
         >
-          <FiPlus aria-hidden="true" size={18} color="#ffffff" />
-          <span>New</span>
+          + New
         </button>
-        <div style={{ position: "relative", flex: 1 }}>
-          <FiSearch
-            aria-hidden="true"
-            size={16}
-            style={{
-              position: "absolute",
-              left: 10,
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "var(--color-secondary)",
-              opacity: 0.9
-            }}
-          />
-          <input
-            ref={searchRef}
-            aria-label="Search notes"
-            type="search"
-            placeholder="Search..."
-            value={internalQuery}
-            onChange={(e) => onChangeQuery(e.target.value)}
-            onKeyDown={onSearchKeyDown}
-            style={{
-              width: "100%",
-              padding: "8px 10px 8px 34px",
-              borderRadius: 6,
-              border: "1px solid var(--border-color)",
-              background: "var(--bg-primary)",
-              color: "var(--text-primary)",
-              outlineColor: "var(--text-secondary)",
-            }}
-          />
-        </div>
+        <input
+          ref={searchRef}
+          aria-label="Search notes"
+          type="search"
+          placeholder="Search..."
+          value={internalQuery}
+          onChange={(e) => onChangeQuery(e.target.value)}
+          onKeyDown={onSearchKeyDown}
+          style={{
+            flex: 1,
+            padding: "8px 10px",
+            borderRadius: 6,
+            border: "1px solid var(--border-color)",
+            background: "var(--bg-primary)",
+            color: "var(--text-primary)",
+            outlineColor: "var(--text-secondary)",
+          }}
+        />
       </div>
 
       <div
@@ -190,19 +174,14 @@ function Sidebar({
                   marginBottom: 6,
                   borderRadius: 8,
                   border: "1px solid var(--border-color)",
-                  background: active ? "color-mix(in srgb, var(--color-primary) 12%, var(--bg-primary))" : "var(--bg-primary)",
+                  background: active ? "rgba(97,218,251,0.12)" : "var(--bg-primary)",
                   color: "var(--text-primary)",
                   cursor: "pointer",
                   userSelect: "none",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
-                  <FiFileText
-                    aria-hidden="true"
-                    size={16}
-                    style={{ color: active ? "var(--color-primary)" : "var(--color-success)" }}
-                  />
-                  <span>{title}</span>
+                <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
+                  {title}
                 </div>
                 <div
                   style={{
