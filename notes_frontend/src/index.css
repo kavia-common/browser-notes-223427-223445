@@ -18,18 +18,20 @@ body {
   color: var(--text-primary, #111827);
   background: var(--bg-primary, #ffffff);
   line-height: 1.5;
-  transition: background-color var(--transition, 180ms ease), color var(--transition, 180ms ease);
 }
 
-/* Typography scale */
+/* Ensure a reasonable default font size and responsive type scaling */
 @media (min-width: 768px) {
-  body { font-size: 16px; }
+  body {
+    font-size: 16px;
+  }
 }
 @media (max-width: 767px) {
-  body { font-size: 15px; }
+  body {
+    font-size: 15px;
+  }
 }
 
-/* Media elements */
 img,
 svg,
 video,
@@ -42,7 +44,6 @@ object {
   max-width: 100%;
 }
 
-/* Form controls inherit baseline typography and colors */
 button,
 input,
 textarea,
@@ -51,7 +52,6 @@ select {
   color: inherit;
 }
 
-/* Reset default button look; component classes re-style buttons */
 button {
   background: none;
   border: none;
