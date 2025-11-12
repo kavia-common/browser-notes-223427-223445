@@ -1,126 +1,226 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
+  /* Light theme base (as requested) */
+  --color-primary: #3b82f6;   /* Primary */
+  --color-secondary: #64748b; /* Secondary (muted slate) */
+  --color-success: #06b6d4;   /* Accent/cyan */
+  --color-error: hsl(0 84% 60%);
+
   --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --bg-secondary: #f8fafc; /* light slate-50 */
+  --surface: #ffffff;
+
+  --text-primary: #111827; /* high contrast default */
+  --text-secondary: #334155; /* slate-700 */
+
+  --border-color: #e5e7eb; /* gray-200 */
+  --focus-ring: var(--color-primary);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+
+  /* Sizing */
+  --sidebar-width: 280px;
+  --topbar-height: auto;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition: 180ms ease;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
+/* App wrapper */
 .App {
-  text-align: center;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
+/* Top bar base overrides (Topbar adds App-header class) */
 .App-header {
   background-color: var(--bg-secondary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  transition: background-color var(--transition), color var(--transition);
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Generic button class used across app */
+/* Shared controls
+   Ensure consistent visual style for buttons and inputs across Topbar/Sidebar/Editor */
 .btn {
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast);
+}
+.btn:hover {
+  background-color: #2563eb; /* darker primary */
+  border-color: #2563eb;
+  box-shadow: var(--shadow-md);
+}
+.btn:active {
+  transform: translateY(0.5px);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* The theme-toggle in Topbar uses .theme-toggle class; make it consistent with .btn */
+.theme-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--color-secondary);
+  color: #fff;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
-
-.btn:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  background-color: #475569; /* slate-600 */
+  border-color: #475569;
+  box-shadow: var(--shadow-md);
 }
-
 .theme-toggle:active {
-  transform: translateY(0);
+  transform: translateY(0.5px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Inputs */
+input[type="text"],
+input[type="search"],
+textarea {
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+input:focus,
+textarea:focus {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 25%, transparent);
 }
 
-/* Responsive design for mobile */
+/* Main layout: two-pane grid */
+main[role="main"] {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: 1px; /* creates separator line using parent's background */
+  background: var(--border-color);
+  min-height: calc(100vh - 120px);
+}
+
+/* Sidebar items */
+.note-item {
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+.note-item:hover {
+  border-color: #cbd5e1; /* slate-300 */
+  transform: translateY(-0.5px);
+}
+.note-item--active {
+  background: color-mix(in srgb, var(--color-primary) 10%, #ffffff);
+  border-color: var(--color-primary);
+}
+
+/* Accessibility: High-visibility focus outlines for interactive elements */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role="listbox"]:focus-visible,
+[role="option"]:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* High contrast defaults for links */
+.App a,
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Utility: visually-hidden, for accessibility (not currently used but useful) */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* added line */
+}
+
+/* Responsive behavior around 768px:
+   - Collapse to single column
+   - Sidebar becomes row at top with horizontal scroll, or stacked
+   - Increase touch targets where relevant
+*/
 @media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  :root {
+    --sidebar-width: 100%;
   }
+
+  main[role="main"] {
+    grid-template-columns: 1fr;
+    gap: 0;
+    min-height: calc(100vh - 140px);
+  }
+
+  /* Make the sidebar section appear first (it already is), add divider below it */
+  section[aria-label="Notes list sidebar"] {
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-secondary);
+  }
+
+  /* Ensure inputs/buttons are comfortable for touch */
+  .btn,
+  .theme-toggle {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  input[type="text"],
+  input[type="search"],
+  textarea {
+    font-size: 15px;
+  }
+}
+
+/* Subtle animations kept for logo if any exists */
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
